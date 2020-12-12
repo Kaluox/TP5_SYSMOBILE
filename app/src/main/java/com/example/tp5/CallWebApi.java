@@ -69,7 +69,25 @@ public class CallWebApi extends AsyncTask<String, String, String> {
                 else if(name.equals("country")) {
                     result.setCountry(parser.nextText());
                 }
-                //ajouter d'autres champs
+                else if(name.equals("status")) {
+                    result.setStatus(parser.nextText());
+                }
+                else if(name.equals("region")) {
+                    result.setRegion(parser.nextText());
+                }
+                else if(name.equals("regionName")) {
+                    result.setRegionName(parser.nextText());
+                }
+                else if(name.equals("city")) {
+                    result.setCity(parser.nextText());
+                }
+                else if(name.equals("zip")) {
+                    result.setZip(parser.nextText());
+                }
+                else if(name.equals("timezone")) {
+                    result.setTimezone(parser.nextText());
+                }
+
                 break;
                 case XmlPullParser.END_TAG:
                     break;
