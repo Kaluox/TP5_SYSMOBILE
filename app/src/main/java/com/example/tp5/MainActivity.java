@@ -35,10 +35,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(lecontext, ResultActivity.class);
                 intent.putExtra("IP", editText.getEditableText().toString());
                 startActivity(intent);
-//                String input = editText.getEditableText().toString();
-//                CallWebApi c = new CallWebApi(findViewById(R.id.textViewResult));
-//                String urlString = "http://ip-api.com/xml/" + input;
-//                c.execute(urlString);
             }
         });
 

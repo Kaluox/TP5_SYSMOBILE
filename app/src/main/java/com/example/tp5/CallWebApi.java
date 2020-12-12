@@ -51,6 +51,4 @@ public class CallWebApi extends AsyncTask<String, String, String> {
         geoIP.parseString(result);
         mTextView.setText(result);
     }
-
-
 } //end CallAPI
