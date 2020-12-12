@@ -18,7 +18,6 @@ import javax.xml.parsers.ParserConfigurationException;
 public class GeoIP {
 
     private String status;
-    private String query;
     private String country;
     private String countryCode;
     private String region;
@@ -27,20 +26,31 @@ public class GeoIP {
     private String zip;
     private String timezone;
 
+    public GeoIP() {
+        this.status = "";
+        this.country = "";
+        this.countryCode = "";
+        this.region = "";
+        this.regionName = "";
+        this.city = "";
+        this.zip = "";
+        this.timezone = "";
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        String outString = "";
+        outString = "statut : " + status + "\n" + "pays : " + country + "\n" + "code pays : " + countryCode + "\n" + "code region : " + region + "\n" + "region : " + regionName + "\n" + "ville : " + city + "\n" + "code postal : " + zip + "\n" + "fuseau horaire : " + timezone;
+        return outString;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-
-    public void setQuery(String query) {
-        this.query = query;
     }
 
     public String getCountry() {
@@ -99,39 +109,8 @@ public class GeoIP {
         this.timezone = timezone;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        String outString = "";
-        outString = status + "\n" + query + "\n" + country + "\n" + countryCode + "\n";
-        return outString;
-    }
 
-    public void parseString(String inputString){
-        try {
-            //read XML from the given string
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            InputSource is = new InputSource(new StringReader(inputString));
-            Document doc = builder.parse(is);
 
-            //this will return a list of xml tags whose name is `hi`
-            NodeList hiList = doc.getElementsByTagName("query");
-            System.out.println("##########        " + doc.getElementsByTagName("query") + "        ##########");
 
-            //you can iterate over hiList and read/process them
-            for (int i = 0; i < hiList.getLength(); i++) {
-                Node child = hiList.item(i);
-                String name = child.getNodeName();
-                String contents = child.getTextContent();
-            }
-        }catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        }
-    }
 }
 

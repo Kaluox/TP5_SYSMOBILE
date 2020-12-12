@@ -27,7 +27,6 @@ public class CallWebApi extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params){
         String inputLine = "";
-        GeoIP result = null;
         URL url;
         try{
             url = new URL(params[0]);
@@ -35,8 +34,8 @@ public class CallWebApi extends AsyncTask<String, String, String> {
 
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            result = new GeoIP();
+            GeoIP result = new GeoIP();
+
             XmlPullParserFactory pullParserFactory;
             try{
                 pullParserFactory = XmlPullParserFactory.newInstance();
@@ -48,11 +47,6 @@ public class CallWebApi extends AsyncTask<String, String, String> {
                 e.printStackTrace();
             } catch(IOException e) {
                 e.printStackTrace();
-            }
-
-            String line;
-            while((line=reader.readLine())!=null){
-                result.append(line);
             }
 
             in.close();
@@ -70,38 +64,35 @@ public class CallWebApi extends AsyncTask<String, String, String> {
             switch(eventType)
             {
                 case XmlPullParser.START_TAG:
-                name = parser.getName();
-                if( name.equals("Error")) {
-                    System.out.println("Web API Error!");
-                }
-                else if(name.equals("status")) {
-                    result.setStatus(parser.nextText());
-                }
-                else if( name.equals("countryCode")) {
-                    result.setCountryCode(parser.nextText());
-                }
-                else if(name.equals("country")) {
-                    result.setCountry(parser.nextText());
-                }
-                else if(name.equals("region")) {
-                    result.setRegion(parser.nextText());
-                }
-                else if(name.equals("regionName")) {
-                    result.setRegionName(parser.nextText());
-                }
-                else if(name.equals("city")) {
-                    result.setCity(parser.nextText());
-                }
-                else if(name.equals("zip")) {
-                    result.setZip(parser.nextText());
-                }
-                else if(name.equals("timezone")) {
-                    result.setTimezone(parser.nextText());
-                }
-                else if(name.equals("query")) {
-                    result.setQuery(parser.nextText());
-                }
-                break;
+                    name = parser.getName();
+                    if( name.equals("Error")) {
+                        System.out.println("Web API Error!");
+                    }
+                    else if(name.equals("status")) {
+                        result.setStatus(parser.nextText());
+                    }
+                    else if( name.equals("countryCode")) {
+                        result.setCountryCode(parser.nextText());
+                    }
+                    else if(name.equals("country")) {
+                        result.setCountry(parser.nextText());
+                    }
+                    else if(name.equals("region")) {
+                        result.setRegion(parser.nextText());
+                    }
+                    else if(name.equals("regionName")) {
+                        result.setRegionName(parser.nextText());
+                    }
+                    else if(name.equals("city")) {
+                        result.setCity(parser.nextText());
+                    }
+                    else if(name.equals("zip")) {
+                        result.setZip(parser.nextText());
+                    }
+                    else if(name.equals("timezone")) {
+                        result.setTimezone(parser.nextText());
+                    }
+                    break;
                 case XmlPullParser.END_TAG:
                     break;
             } // end switch
@@ -112,8 +103,6 @@ public class CallWebApi extends AsyncTask<String, String, String> {
 
     protected void onPostExecute(String result){
         System.out.println("##########     Entering onPostExecute     ##########");
-        GeoIP geoIP = new GeoIP();
-        geoIP.parseString(result);
         mTextView.setText(result);
     }
 } //end CallAPI
