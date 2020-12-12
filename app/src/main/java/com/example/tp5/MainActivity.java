@@ -32,11 +32,13 @@ public class MainActivity extends AppCompatActivity {
         sendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(lecontext, ResultActivity.class));
-                String input = editText.getEditableText().toString();
-                CallWebApi c = new CallWebApi(findViewById(R.id.textViewResult));
-                String urlString = "http://ip-api.com/xml/" + input;
-                c.execute(urlString);
+                Intent intent = new Intent(lecontext, ResultActivity.class);
+                intent.putExtra("IP", editText.getEditableText().toString());
+                startActivity(intent);
+//                String input = editText.getEditableText().toString();
+//                CallWebApi c = new CallWebApi(findViewById(R.id.textViewResult));
+//                String urlString = "http://ip-api.com/xml/" + input;
+//                c.execute(urlString);
             }
         });
 

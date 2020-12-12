@@ -46,9 +46,10 @@ public class CallWebApi extends AsyncTask<String, String, String> {
     }
 
     protected void onPostExecute(String result){
+        System.out.println("##########     Entering onPostExecute     ##########");
         GeoIP geoIP = new GeoIP();
         geoIP.parseString(result);
-        mTextView.setText(geoIP.toString());
+        mTextView.setText(result);
     }
 
 

@@ -3,6 +3,11 @@ package com.example.tp5;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -14,5 +19,17 @@ public class ResultActivity extends AppCompatActivity {
         ResultActivity lecontext = this;
         // Titre
         lecontext.setTitle("Ip result");
+
+        TextView textViewResult = (TextView)findViewById(R.id.textViewResult);
+
+        CallWebApi c = new CallWebApi(textViewResult);
+        String ipString = getIntent().getStringExtra("IP");
+        String urlString = "http://ip-api.com/xml/" + ipString;
+        try {
+            URL url = new URL(urlString);
+            c.execute(url.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
     }
 }
