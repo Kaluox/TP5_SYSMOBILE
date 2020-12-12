@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -26,7 +27,7 @@ public class CallWebApi extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params){
         String inputLine = "";
-        StringBuilder result = null;
+        GeoIP result = null;
         URL url;
         try{
             url = new URL(params[0]);
@@ -35,7 +36,20 @@ public class CallWebApi extends AsyncTask<String, String, String> {
             InputStream in = new BufferedInputStream(urlConnection.getInputStream());
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            result = new StringBuilder();
+            result = new GeoIP();
+            XmlPullParserFactory pullParserFactory;
+            try{
+                pullParserFactory = XmlPullParserFactory.newInstance();
+                XmlPullParser parser = pullParserFactory.newPullParser();
+                parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+                parser.setInput(in, null);
+                result = parseXML(parser);
+            } catch(XmlPullParserException e) {
+                e.printStackTrace();
+            } catch(IOException e) {
+                e.printStackTrace();
+            }
+
             String line;
             while((line=reader.readLine())!=null){
                 result.append(line);
@@ -60,17 +74,14 @@ public class CallWebApi extends AsyncTask<String, String, String> {
                 if( name.equals("Error")) {
                     System.out.println("Web API Error!");
                 }
+                else if(name.equals("status")) {
+                    result.setStatus(parser.nextText());
+                }
                 else if( name.equals("countryCode")) {
                     result.setCountryCode(parser.nextText());
                 }
-                else if(name.equals("query")) {
-                    result.setQuery(parser.nextText());
-                }
                 else if(name.equals("country")) {
                     result.setCountry(parser.nextText());
-                }
-                else if(name.equals("status")) {
-                    result.setStatus(parser.nextText());
                 }
                 else if(name.equals("region")) {
                     result.setRegion(parser.nextText());
@@ -87,7 +98,9 @@ public class CallWebApi extends AsyncTask<String, String, String> {
                 else if(name.equals("timezone")) {
                     result.setTimezone(parser.nextText());
                 }
-
+                else if(name.equals("query")) {
+                    result.setQuery(parser.nextText());
+                }
                 break;
                 case XmlPullParser.END_TAG:
                     break;
