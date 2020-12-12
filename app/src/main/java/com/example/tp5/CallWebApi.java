@@ -1,5 +1,6 @@
 package com.example.tp5;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.TextView;
 
@@ -45,6 +46,10 @@ public class CallWebApi extends AsyncTask<String, String, String> {
     }
 
     protected void onPostExecute(String result){
-        mTextView.setText(result);
+        GeoIP geoIP = new GeoIP();
+        geoIP.parseString(result);
+        mTextView.setText(geoIP.toString());
     }
+
+
 } //end CallAPI
