@@ -20,6 +20,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Scanner;
 
@@ -39,26 +40,23 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         CallWebApi c = new CallWebApi(tv);
+
+//        try {
+//            URL newurl = new URL("http://www.google.com");
+//            c.execute(newurl.toString());
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
+
         Button btn = (Button)findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                URL url;
-//                HttpURLConnection urlConnection = null;
-//                try {
-//                    url = new URL("http://www.google.com/");
-//                    urlConnection = (HttpURLConnection) url.openConnection();
-//                    InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//                    readStream(in);
-//                    urlConnection.disconnect();
-//                }catch (Exception e){
-//                    // TODO Auto generated catch block
-//                    e.printStackTrace();
-//                    urlConnection.disconnect();}
-                try{
-                    c.execute();
-                }catch (Exception e){
-                    
+                try {
+                    URL newurl = new URL("http://www.google.com");
+                    c.execute(newurl.toString());
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
                 }
             }
         });
