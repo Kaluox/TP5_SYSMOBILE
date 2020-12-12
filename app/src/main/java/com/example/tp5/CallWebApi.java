@@ -61,13 +61,13 @@ public class CallWebApi extends AsyncTask<String, String, String> {
                     System.out.println("Web API Error!");
                 }
                 else if( name.equals("countryCode")) {
-                    result.countryCode=parser.nextText();
+                    result.setCountryCode(parser.nextText());
                 }
                 else if(name.equals("query")) {
-                    result.query= parser.nextText();
+                    result.setQuery(parser.nextText());
                 }
                 else if(name.equals("country")) {
-                    result.country= parser.nextText();
+                    result.setCountry(parser.nextText());
                 }
                 //ajouter d'autres champs
                 break;
